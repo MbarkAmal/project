@@ -249,7 +249,7 @@ const Cart = () => {
           {/* Assuming you need to calculate the total price for all cart items */}
           <SummaryItemPrice>$ </SummaryItemPrice>
         </SummaryItem>
-        <Button>CHECK OUT NOW</Button>
+        <Button><Link to="/checkout">CHECK OUT NOW</Link></Button>
       </Summary>
     </Bottom>
   </Wrapper>
