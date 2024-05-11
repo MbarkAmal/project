@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 
 import axios from 'axios';
 import Box from "@mui/material/Box";
@@ -97,7 +98,7 @@ function useForm() {
     zip: '',
     country: '',
     CardNum: '',
-    CVV: '',
+    cvv: '',
     dateEX: '',
   });
 
@@ -153,13 +154,37 @@ export default function Checkout() {
 
   // Function to handle next step
   const handleNext = async () => {
-    setActiveStep(activeStep + 1); 
+    let isStepValid = true;
+  
+    switch (activeStep) {
+      case 0:
+       // isStepValid = formData.Fullname.trim() !== '' && formData.phone.trim() !== '' && formData.address.trim() !== '' && formData.city.trim() !== '' && formData.state.trim() !== '' && formData.zip.trim() !== '' && formData.country.trim() !== '';
+        break;
+      case 1:
+        //isStepValid = formData.CardNum.trim() !== '' && formData.cvv.trim() !== '' && formData.dateEX.trim() !== '';
+        break;
+      case 2:
+        break;
+      default:
+        throw new Error('Unknown step');
+    }
 
-    // If it's the last step, submit the form data
-    if (activeStep === steps.length - 1) {
-      await handleSubmit();
+    console.log('Step:', activeStep);
+  console.log('isStepValid:', isStepValid);
+  console.log('formData:', formData);
+  
+    if (isStepValid) {
+      setActiveStep(activeStep + 1);
+  
+      if (activeStep === steps.length - 1) {
+        await handleSubmit();
+      }
+    } else {
+      toast.error("Please fill all the fields");
     }
   };
+  
+  
 
   // Function to handle previous step
   const handleBack = () => {
@@ -437,7 +462,16 @@ export default function Checkout() {
                       endIcon={<ChevronRightRoundedIcon />}
                       onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
                       sx={{
-                        width: { xs: "100%", sm: "fit-content" },
+                        width: "fit-content",
+                        padding: "10px 20px",
+                        borderRadius: "8px",
+                        backgroundColor: "#007bff",
+                        color: "#ffffff",
+                        border: "none",
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor: "#0056b3", // Change background color on hover
+                        },
                       }}
                     >
                       {activeStep === steps.length - 1 ? "Place order" : "Next"}

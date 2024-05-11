@@ -14,10 +14,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
 }));
+
 function ShipAddress( {formData , setFormData}) {
  /* const dispatch = useDispatch();
   const [inputValues, setInputValues] = React.useState({
@@ -37,7 +39,7 @@ function ShipAddress( {formData , setFormData}) {
       toast.success("Go to payment details");
       navigate("/checkout/paymentdetails");
     } else {
-      toast.error("Please fill all the fields");
+        toast.error("Please fill all the fields");
     }
   };
 /*
@@ -170,24 +172,7 @@ function ShipAddress( {formData , setFormData}) {
           margin: "20px 10px", // Adjust as needed
         }}
       >
-        <Button
-          type="button"
-         onClick={moveToNext}
-          sx={{
-            width: "fit-content",
-            padding: "10px 20px",
-            borderRadius: "8px",
-            backgroundColor: "#007bff",
-            color: "#ffffff",
-            border: "none",
-            cursor: "pointer",
-            "&:hover": {
-              backgroundColor: "#0056b3", // Change background color on hover
-            },
-          }}
-        >
-          NEXT
-        </Button>
+       
       </div>
     </>
   );

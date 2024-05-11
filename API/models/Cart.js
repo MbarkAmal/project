@@ -2,45 +2,45 @@ const mongoose = require('mongoose')
 const  cartSchema = new mongoose.Schema ({
     Fullname: {
         type: String,
-      //  required : true,
+        required : true,
     } ,
     phone : {
         type:Number ,
-       // required : true,
+        required : true,
     },
     address : {
         type: String ,
-       // required : true,
+       required : true,
     }, 
     city : {
         type : String, 
-      //  required : true,
+        required : true,
     },
     state : {
         type : String,
-      //  required : true ,
+        required : true ,
     },
     zip : {
         type : Number ,
-      //  required : true,
+        required : true,
     },
     country : {
         type : String , 
-      //  required : true,
+        required : true,
     } , 
 
     CardNum : {
         type : Number ,
-      //  required : true ,
+       required : true ,
 
     },
     CVV : {
         type : Number ,
-       // required : true,
+       required : true,
     },
     dateEX : {
-        type : Date ,
-       // required : true
+      type: Date,
+       required : true
     },
 
 });

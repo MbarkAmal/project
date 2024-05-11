@@ -32,6 +32,7 @@ const FormGrid = styled("div")(() => ({
 // Import Stepper component
 
 function Payment  ( {formData , setFormData})  {
+
  // console.log(formData)
   const navigate = useNavigate();
 /*  const [paymentInputValues, setPaymentInputValues] = React.useState({
@@ -69,6 +70,7 @@ function Payment  ( {formData , setFormData})  {
   const goBack = () => {
     navigate("/checkout");
   };
+  
 
   // Define steps array
   const steps = ["Shipping address", "Payment details", "Review your order"];
@@ -77,20 +79,7 @@ function Payment  ( {formData , setFormData})  {
     <>
       <ToastContainer />
       {/* Display steps array using Stepper component */}
-      <Stepper
-        activeStep={1}
-        alternativeLabel
-        sx={{
-          padding: "20px", // Add padding
-          margin: "20px 0", // Add margin
-        }}
-      >
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+     
       <Stack spacing={{ xs: 3, sm: 6 }} useFlexGap>
         <FormControl component="fieldset" fullWidth>
           <RadioGroup
@@ -151,46 +140,37 @@ function Payment  ( {formData , setFormData})  {
                   Card number
                 </FormLabel>
                 <OutlinedInput
-                  id="card-number"
+               //   id="card-number"
                   autoComplete="card-number"
-                  name="cardNumber"
+                 // name="cardNumber"
                   value={formData.CardNum}
                   placeholder="0000 0000 0000 0000"
-                  required
                   onChange={(e) => setFormData({...formData , CardNum:e.target.value})}
                   maxLength={16}
+                  required
+
                 />
               </FormGrid>
+
               <FormGrid sx={{ maxWidth: "20%" }}>
                 <FormLabel htmlFor="cvv" required>
                   CVV
                 </FormLabel>
                 <OutlinedInput
-                  id="cvv"
+               //   id="cvv"
                   autoComplete="CVV"
-                  name="cvv"
+                 // name="cvv"
                   placeholder="123"
+                  value={formData.cvv}
+                  onChange={(e) => setFormData({...formData , cvv:e.target.value})}
                   required
-                  value={formData.CVV}
-                  onChange={(e) => setFormData({...formData , CVV:e.target.value})}
                   />
               </FormGrid>
             </Box>
+
+
             <Box sx={{ display: "flex", gap: 2 }}>
-              <FormGrid sx={{ flexGrow: 1 }}>
-                <FormLabel htmlFor="card-name" required>
-                  Name
-                </FormLabel>
-                <OutlinedInput
-                  id="card-name"
-                  name="nameOfCard"
-                //  value={formData.nameOfCard}
-                  autoComplete="card-name"
-                  placeholder="John Smith"
-                 // onChange={(e) => setFormData({...formData , nameOfCard:e.target.value})}
-                 // required
-                />
-              </FormGrid>
+             
               <FormGrid sx={{ flexGrow: 1 }}>
                 <FormLabel htmlFor="card-expiration" required>
                   Expiration date
@@ -200,54 +180,23 @@ function Payment  ( {formData , setFormData})  {
                   autoComplete="card-expiration"
                   //name="expirationDate"
                   value={formData.dateEx}
-                  placeholder="MM/YY"
+                  placeholder="YYYY-MM-DD"
                   type="date"
-                  required
                   onChange={(e) => setFormData({...formData , dateEx:e.target.value})}
+                  required
                   />
               </FormGrid>
             </Box>
+
+
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
               }}
             >
-              <Button
-                sx={{
-                  width: "fit-content",
-                  padding: "10px 20px",
-                  borderRadius: "8px",
-                  backgroundColor: "#007bff",
-                  color: "#ffffff",
-                  border: "none",
-                  cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: "#0056b3", // Change background color on hover
-                  },
-                }}
-                onClick={goBack}
-              >
-                BACK
-              </Button>
-              <Button
-                sx={{
-                  width: "fit-content",
-                  padding: "10px 20px",
-                  borderRadius: "8px",
-                  backgroundColor: "#007bff",
-                  color: "#ffffff",
-                  border: "none",
-                  cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: "#0056b3", // Change background color on hover
-                  },
-                  marginLeft: "10px",
-                }}
-              //  onClick={goToPlaceOrder}
-              >
-                NEXT
-              </Button>
+           
+            
             </Box>
           </Box>
         </Box>

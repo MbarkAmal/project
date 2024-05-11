@@ -12,7 +12,7 @@ exports.remplircartForm = async (req, res) => {
             zip,
             country,
             CardNum,
-            CVV,
+            cvv,
             dateEX
         } = req.body;
 
@@ -26,7 +26,7 @@ exports.remplircartForm = async (req, res) => {
             zip,
             country,
             CardNum,
-            CVV,
+            cvv,
             dateEX
         });
 

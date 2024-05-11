@@ -40,7 +40,7 @@ export default function Review() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#fff",
       }}
     >
       <Stack
@@ -86,16 +86,8 @@ export default function Review() {
         >
           <div>
             <Typography variant="h6" sx={{ color: "#333", fontWeight: 700 }}>
-              Shipment Details
-            </Typography>
-            <Typography variant="body1">John Smith</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {addresses.join(", ")}
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="h6" sx={{ color: "#333", fontWeight: 700 }}>
               Payment Details
+              <p>ghfbsjb</p>
             </Typography>
             <Grid container spacing={2}>
               {products.map((product) => (
@@ -111,24 +103,7 @@ export default function Review() {
             </Grid>
           </div>
         </Stack>
-        <Button
-          sx={{
-            width: "fit-content",
-            padding: "12px 24px",
-            borderRadius: "8px",
-            backgroundColor: "#1976d2",
-            color: "#ffffff",
-            border: "none",
-            cursor: "pointer",
-            "&:hover": {
-              backgroundColor: "#1565c0",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-            },
-          }}
-          onClick={placeOrder}
-        >
-          Place Order
-        </Button>
+       
       </Stack>
     </Box>
   );
