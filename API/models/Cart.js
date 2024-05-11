@@ -1,8 +1,19 @@
 const mongoose = require('mongoose')
 const  cartSchema = new mongoose.Schema ({
+  userID: {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+  },
+    username: {
+        type: String,
+    }
+},
+
+
     Fullname: {
         type: String,
-        required : true,
+       // required : true,
     } ,
     phone : {
         type:Number ,
@@ -31,16 +42,16 @@ const  cartSchema = new mongoose.Schema ({
 
     CardNum : {
         type : Number ,
-       required : true ,
+      // required : true ,
 
     },
-    CVV : {
+    cvv : {
         type : Number ,
        required : true,
     },
     dateEX : {
       type: Date,
-       required : true
+     //  required : true
     },
 
 });

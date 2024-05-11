@@ -104,16 +104,30 @@ function useForm() {
 
   const handleSubmit = async () => {
     try {
-      // Make API request to remplircartform endpoint with the form data
-      await axios.post('http://localhost:4000/cartorder/remplircartform', formData);
+      const userData = JSON.parse(localStorage.getItem('user_data'));
+      //const userID = userData._id; // Assuming user ID is stored in _id field of user_data
+      //const username = userData.username;
+  
+      // Include userID and username in the formData
+      const formDataWithUser = {
+        ...formData,
+        userID: {
+          _id: userData._id,
+          username: userData.username
+      }
+      };
+  
+      // Make API request to remplircartform endpoint with the form data including user details
+      await axios.post('http://localhost:4000/cartorder/remplircartform', formDataWithUser);
       console.log('Form data submitted successfully');
-      Navigate('/checkout/revieworder')
+      Navigate('/checkout/revieworder');
     } catch (error) {
       console.error('Error submitting form data:', error);
       console.log('Error response:', error.response); // Log the error response for detailed information
       // Handle error (e.g., display error message to user)
     }
   };
+  
   
   return [formData, setFormData, handleSubmit]; // Expose handleSubmit
 }
