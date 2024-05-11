@@ -20,7 +20,7 @@ const  cartSchema = new mongoose.Schema ({
         type : String,
       //  required : true ,
     },
-    postalCode : {
+    zip : {
         type : Number ,
       //  required : true,
     },

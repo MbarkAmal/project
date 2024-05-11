@@ -18,8 +18,8 @@ const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
 }));
-function ShipAddress() {
-  const dispatch = useDispatch();
+function ShipAddress( {formData , setFormData}) {
+ /* const dispatch = useDispatch();
   const [inputValues, setInputValues] = React.useState({
     firstName: "",
     lastName: "",
@@ -28,20 +28,19 @@ function ShipAddress() {
     state: "",
     zip: "",
     country: "",
-  });
+  });*/
 
   const moveToNext = () => {
     console.log("Button clicked, checking form validation...");
-    const { firstName, lastName, address, city, state, zip, country } =
-      inputValues;
-    if (firstName && lastName && address && city && state && zip && country) {
-      toast.success("go to payment details");
+    const { Fullname, phone, address, city, state, zip, country } = formData;
+    if (Fullname && phone && address && city && state && zip && country) {
+      toast.success("Go to payment details");
       navigate("/checkout/paymentdetails");
     } else {
-      toast.error("please fill all the fields");
+      toast.error("Please fill all the fields");
     }
   };
-
+/*
   let name, value;
   const handleChange = (e) => {
     name = e.target.name;
@@ -52,7 +51,7 @@ function ShipAddress() {
     const { firstName, lastName, address } = inputValues;
     dispatch(checkOutShippingData(firstName, lastName, address));
   }, [inputValues, dispatch]);
-  const navigate = useNavigate("");
+  */const navigate = useNavigate("");
   return (
     <>
       <ToastContainer />
@@ -62,28 +61,28 @@ function ShipAddress() {
             First name
           </FormLabel>
           <OutlinedInput
-            id="firstName"
-            name="firstName"
-            value={inputValues.firstName}
+           // id="firstName"
+            //name="firstName"
+            value={formData.Fullname}
             type="name"
             placeholder="John"
             autoComplete="first name"
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData , Fullname:e.target.value})}
             required
           />
         </FormGrid>
         <FormGrid item xs={12} md={6}>
           <FormLabel htmlFor="last-name" required>
-            Last name
+            Phone
           </FormLabel>
           <OutlinedInput
-            id="lastName"
-            name="lastName"
-            value={inputValues.lastName}
-            type="last-name"
-            placeholder="Snow"
+           //  id="lastName"
+            //name="lastName"
+            value={formData.phone}
+            type="Number"
+            placeholder="Phone"
             autoComplete="last name"
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData , phone:e.target.value})}
             required
           />
         </FormGrid>
@@ -94,11 +93,11 @@ function ShipAddress() {
           <OutlinedInput
             id="address"
             name="address"
-            value={inputValues.address}
+            value={formData.address}
             type="address"
             placeholder="Street name and number"
             autoComplete="shipping address-line1"
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData , address:e.target.value})}
             required
           />
         </FormGrid>
@@ -110,11 +109,11 @@ function ShipAddress() {
           <OutlinedInput
             id="city"
             name="city"
-            value={inputValues.city}
+            value={formData.city}
             type="city"
             placeholder="New York"
             autoComplete="City"
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData , city:e.target.value})}
             required
           />
         </FormGrid>
@@ -125,11 +124,11 @@ function ShipAddress() {
           <OutlinedInput
             id="state"
             name="state"
-            value={inputValues.state}
+            value={formData.state}
             type="state"
             placeholder="NY"
             autoComplete="State"
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData , state:e.target.value})}
             required
           />
         </FormGrid>
@@ -140,11 +139,11 @@ function ShipAddress() {
           <OutlinedInput
             id="zip"
             name="zip"
-            value={inputValues.zip}
+            value={formData.zip}
             type="zip"
             placeholder="12345"
             autoComplete="shipping postal-code"
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData , zip:e.target.value})}
             required
           />
         </FormGrid>
@@ -155,11 +154,11 @@ function ShipAddress() {
           <OutlinedInput
             id="country"
             name="country"
-            value={inputValues.country}
+            value={formData.country}
             type="country"
             placeholder="United States"
             autoComplete="shipping country"
-            onChange={handleChange}
+            onChange={(e) => setFormData({...formData , country:e.target.value})}
             required
           />
         </FormGrid>
@@ -173,7 +172,7 @@ function ShipAddress() {
       >
         <Button
           type="button"
-          onClick={moveToNext}
+         onClick={moveToNext}
           sx={{
             width: "fit-content",
             padding: "10px 20px",

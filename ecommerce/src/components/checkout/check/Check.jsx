@@ -1,6 +1,7 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import PropTypes from "prop-types";
 
+import axios from 'axios';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -30,6 +31,7 @@ import Review from "../review/Review";
 import ToggleColorMode from "../info/ToggleColorMode/ToggleColorMode";
 import ShipAddress from "../sadress/ShipAddress";
 import Payment from "../payment/Payment";
+import { Navigate } from 'react-router-dom';
 
 function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
   return (
@@ -73,7 +75,7 @@ ToggleCustomTheme.propTypes = {
   toggleCustomTheme: PropTypes.func.isRequired,
 };
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+
 
 const logoStyle = {
   width: "140px",
@@ -82,42 +84,87 @@ const logoStyle = {
   marginRight: "-8px",
 };
 
-function getStepContent(step) {
+const steps = ["Shipping address", "Payment details", "Review your order"];
+
+// Custom hook to manage form data
+function useForm() {
+  const [formData, setFormData] = useState({
+    Fullname: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: '',
+    CardNum: '',
+    CVV: '',
+    dateEX: '',
+  });
+
+  const handleSubmit = async () => {
+    try {
+      // Make API request to remplircartform endpoint with the form data
+      await axios.post('http://localhost:4000/cartorder/remplircartform', formData);
+      console.log('Form data submitted successfully');
+      Navigate('/checkout/revieworder')
+    } catch (error) {
+      console.error('Error submitting form data:', error);
+      console.log('Error response:', error.response); // Log the error response for detailed information
+      // Handle error (e.g., display error message to user)
+    }
+  };
+  
+  return [formData, setFormData, handleSubmit]; // Expose handleSubmit
+}
+
+// Function to get step content based on step number
+function getStepContent(step, formData, setFormData, handleSubmit) {
   switch (step) {
     case 0:
-      return <ShipAddress />;
+      return <ShipAddress formData={formData} setFormData={setFormData} />;
     case 1:
-      return <Payment />;
+      return <Payment formData={formData} setFormData={setFormData} />;
     case 2:
-      return <Review />;
+      return <Review formData={formData} setFormData={setFormData} />;
     default:
-      throw new Error("Unknown step");
+      throw new Error('Unknown step');
   }
 }
 
 export default function Checkout() {
-  const [mode, setMode] = React.useState("light");
-  const [showCustomTheme, setShowCustomTheme] = React.useState(true);
+  const [mode, setMode] = useState("light");
+  const [showCustomTheme, setShowCustomTheme] = useState(true);
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData, handleSubmit] = useForm(); // Destructure handleSubmit
 
+  const steps = ["Shipping address", "Payment details", "Review your order" , ]; // Define steps here
+
+  // Function to toggle color mode
   const toggleColorMode = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
+  // Function to toggle custom theme
   const toggleCustomTheme = () => {
     setShowCustomTheme((prev) => !prev);
   };
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
+  // Function to handle next step
+  const handleNext = async () => {
+    setActiveStep(activeStep + 1); 
+
+    // If it's the last step, submit the form data
+    if (activeStep === steps.length - 1) {
+      await handleSubmit();
+    }
   };
 
+  // Function to handle previous step
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
   return (
     <ThemeProvider theme={showCustomTheme ? checkoutTheme : defaultTheme}>
       <CssBaseline />
@@ -343,7 +390,7 @@ export default function Checkout() {
               </Stack>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+  {getStepContent(activeStep, formData, setFormData  )}
                 <Box
                   sx={{
                     display: "flex",
@@ -385,16 +432,17 @@ export default function Checkout() {
                     </Button>
                   )}
 
-                  {/* <Button
-                    variant="contained"
-                    endIcon={<ChevronRightRoundedIcon />}
-                    onClick={handleNext}
-                    sx={{
-                      width: { xs: "100%", sm: "fit-content" },
-                    }}
-                  >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                  </Button> */}
+                    <Button
+                      variant="contained"
+                      endIcon={<ChevronRightRoundedIcon />}
+                      onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
+                      sx={{
+                        width: { xs: "100%", sm: "fit-content" },
+                      }}
+                    >
+                      {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    </Button>
+
                 </Box>
               </React.Fragment>
             )}

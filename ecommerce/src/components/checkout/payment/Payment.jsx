@@ -31,9 +31,10 @@ const FormGrid = styled("div")(() => ({
 
 // Import Stepper component
 
-const Payment = () => {
+function Payment  ( {formData , setFormData})  {
+ // console.log(formData)
   const navigate = useNavigate();
-  const [paymentInputValues, setPaymentInputValues] = React.useState({
+/*  const [paymentInputValues, setPaymentInputValues] = React.useState({
     cardNumber: Number,
     cvv: Number,
     nameOfCard: "",
@@ -63,7 +64,7 @@ const Payment = () => {
     } else {
       toast.error("Please fill all the fields");
     }
-  };
+  };*/
 
   const goBack = () => {
     navigate("/checkout");
@@ -153,10 +154,10 @@ const Payment = () => {
                   id="card-number"
                   autoComplete="card-number"
                   name="cardNumber"
-                  value={paymentInputValues.cardNumber}
+                  value={formData.CardNum}
                   placeholder="0000 0000 0000 0000"
                   required
-                  onChange={handleChange}
+                  onChange={(e) => setFormData({...formData , CardNum:e.target.value})}
                   maxLength={16}
                 />
               </FormGrid>
@@ -170,9 +171,9 @@ const Payment = () => {
                   name="cvv"
                   placeholder="123"
                   required
-                  value={paymentInputValues.cvv}
-                  onChange={handleChange}
-                />
+                  value={formData.CVV}
+                  onChange={(e) => setFormData({...formData , CVV:e.target.value})}
+                  />
               </FormGrid>
             </Box>
             <Box sx={{ display: "flex", gap: 2 }}>
@@ -183,11 +184,11 @@ const Payment = () => {
                 <OutlinedInput
                   id="card-name"
                   name="nameOfCard"
-                  value={paymentInputValues.nameOfCard}
+                //  value={formData.nameOfCard}
                   autoComplete="card-name"
                   placeholder="John Smith"
-                  onChange={handleChange}
-                  required
+                 // onChange={(e) => setFormData({...formData , nameOfCard:e.target.value})}
+                 // required
                 />
               </FormGrid>
               <FormGrid sx={{ flexGrow: 1 }}>
@@ -195,14 +196,15 @@ const Payment = () => {
                   Expiration date
                 </FormLabel>
                 <OutlinedInput
-                  id="card-expiration"
+                 // id="card-expiration"
                   autoComplete="card-expiration"
-                  name="expirationDate"
-                  value={paymentInputValues.expirationDate}
+                  //name="expirationDate"
+                  value={formData.dateEx}
                   placeholder="MM/YY"
+                  type="date"
                   required
-                  onChange={handleChange}
-                />
+                  onChange={(e) => setFormData({...formData , dateEx:e.target.value})}
+                  />
               </FormGrid>
             </Box>
             <Box
@@ -242,7 +244,7 @@ const Payment = () => {
                   },
                   marginLeft: "10px",
                 }}
-                onClick={goToPlaceOrder}
+              //  onClick={goToPlaceOrder}
               >
                 NEXT
               </Button>
