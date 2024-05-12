@@ -101,7 +101,6 @@ function useForm() {
     cvv: '',
     dateEX: '',
   });
-
   const handleSubmit = async () => {
     try {
       const userData = JSON.parse(localStorage.getItem('user_data'));
@@ -113,21 +112,25 @@ function useForm() {
               username: userData.username
           }
       };
-  
-      // Make API request to remplircartform endpoint with the form data including user details
-      await axios.post('http://localhost:4000/cartorder/remplircartform', formDataWithUser);
+
+      const one = "http://localhost:4000/cartorder/remplircartform";
+      const two = `http://localhost:4000/order/orders/${userData._id}`;
+
+      const requestOne = axios.post(one, formDataWithUser);
+      const requestTwo = axios.post(two, formDataWithUser);
+
+      await axios.all([requestOne, requestTwo]);
+
       console.log('Form data submitted successfully');
-      Navigate('/checkout/revieworder');
+      // Navigate('/checkout/revieworder'); // Uncomment this line if you have the Navigate function available
     } catch (error) {
       console.error('Error submitting form data:', error);
       console.log('Error response:', error.response); 
     }
   };
-  
-  
-  return [formData, setFormData, handleSubmit]; // Expose handleSubmit
-}
 
+  return [formData, setFormData, handleSubmit];
+};
 // Function to get step content based on step number
 function getStepContent(step, formData, setFormData, handleSubmit) {
   switch (step) {

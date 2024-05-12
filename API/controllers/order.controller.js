@@ -15,6 +15,10 @@ exports.createOrder = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        // Fetch username separately
+        const username = user.username;
+        console.log(username);
+
         // Fetch Paniers associated with the userId and populate the products array
         const paniers = await Panier.find({ 'userID._id': userId }).populate('products._id');
         if (paniers.length === 0) {
@@ -31,13 +35,17 @@ exports.createOrder = async (req, res) => {
             return {
                 _id: panier._id,
                 products: productDetails,
-                totalPrice: panier.total
+                totalPrice: panier.total,
+                quantity: panier.quantity // Include quantity from panier
             };
         });
 
         // Create a new order
         const order = new Order({
-            user: userId,
+            user: {
+                _id: userId,
+                username: username
+            },
             paniers: paniersWithProductNames,
             totalPrice: paniers.reduce((acc, panier) => acc + panier.total, 0)
         });
