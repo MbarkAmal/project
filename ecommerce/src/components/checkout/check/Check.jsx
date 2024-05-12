@@ -32,7 +32,7 @@ import Review from "../review/Review";
 import ToggleColorMode from "../info/ToggleColorMode/ToggleColorMode";
 import ShipAddress from "../sadress/ShipAddress";
 import Payment from "../payment/Payment";
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
   return (
@@ -101,6 +101,7 @@ function useForm() {
     cvv: '',
     dateEX: '',
   });
+  const navigate = useNavigate(); 
   const handleSubmit = async () => {
     try {
       const userData = JSON.parse(localStorage.getItem('user_data'));
@@ -118,11 +119,12 @@ function useForm() {
 
       const requestOne = axios.post(one, formDataWithUser);
       const requestTwo = axios.post(two, formDataWithUser);
+      
 
       await axios.all([requestOne, requestTwo]);
 
       console.log('Form data submitted successfully');
-      // Navigate('/checkout/revieworder'); // Uncomment this line if you have the Navigate function available
+      navigate("/placeorder"); 
     } catch (error) {
       console.error('Error submitting form data:', error);
       console.log('Error response:', error.response); 
@@ -151,7 +153,8 @@ export default function Checkout() {
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormData, handleSubmit] = useForm(); // Destructure handleSubmit
+  const [formData, setFormData, handleSubmit] = useForm(); 
+
 
   const steps = ["Shipping address", "Payment details", "Review your order" , ]; // Define steps here
 
