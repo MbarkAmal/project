@@ -1,4 +1,5 @@
-const Cart = require('../models/Cart');
+const Cart = require('../models/Cart'); // Assuming your cart model is in '../models/cart'
+const Panier = require('../models/Panier'); // Assuming your panier model is in '../models/panier'
 
 exports.remplircartForm = async (req, res) => {
     try {

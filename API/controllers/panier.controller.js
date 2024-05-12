@@ -136,3 +136,21 @@ exports.getCart = async (req, res) => {
 */
 
 
+exports.getPaniersByUserID = async (req, res) => {
+    try {
+        const userId = req.params.userId; // Extracting user ID from URL parameter
+        console.log('User ID from URL parameter:', userId);
+
+        // Fetch all paniers from the database for the given userID
+        const paniers = await Cart.find({ 'userID._id': userId });
+
+        if (!paniers || paniers.length === 0) {
+            return res.status(404).json({ error: 'Paniers not found for this user' });
+        }
+
+        res.status(200).json(paniers);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};

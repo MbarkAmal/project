@@ -20,6 +20,7 @@ const adminRouter = require('./routes/admin.router');
 const userRouter = require('./routes/user.router');
 const staticRouter = require('./routes/static.router')
 const cartRouter = require ('./routes/cart.router')
+const orderSchema = require('./routes/order.router')
 
 app.use('/Products',productRouter)
 app.use('/Cart',panierRouter)
@@ -28,6 +29,7 @@ app.use('/admin',adminRouter)
 app.use('/user',userRouter)
 app.use('/static',staticRouter)
 app.use('/cartorder',cartRouter)
+app.use('/order',orderSchema)
 
 //const product = require ('./models/Product')
 // connect to db 

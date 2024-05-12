@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose');
 
-const cartSchema = new mongoose.Schema({
+const panierSchema = new mongoose.Schema({
 
     userID: {
         _id: {
@@ -40,4 +40,4 @@ const cartSchema = new mongoose.Schema({
 { timestamps: true },
 );
 
-module.exports = mongoose.model('panier', cartSchema);
+module.exports = mongoose.model('panier', panierSchema);

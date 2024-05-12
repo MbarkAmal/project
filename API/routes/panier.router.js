@@ -12,4 +12,6 @@ route.get('/getCartdetail/:cartId', cart.getCartDetail);
 
 route.get('/getcart/:userId', cart.getCart)
 
+route.get('/getPaniersByUserID/:userId', cart.getPaniersByUserID)
+
 module.exports = route 
