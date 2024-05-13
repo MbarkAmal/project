@@ -84,6 +84,6 @@ exports.delete = async (req , res) =>{
 
     }catch (error) {
         console.log("error deleting order" , error)
-        res.status(5000).json({message: "server error"})
+        res.status(500).json({message: "server error"})
     }
 };

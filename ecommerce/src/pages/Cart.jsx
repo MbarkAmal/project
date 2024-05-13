@@ -9,7 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { mobile } from "../responsive";
 import ReactDOM from "react-dom";
-import Remove from "@mui/icons-material/Remove";
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 
@@ -35,11 +35,13 @@ const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
   cursor: pointer;
-  border: ${(props) => props.type === "filled" && "none"};
+  border: none; /* Remove the border style */
+
   background-color: ${(props) =>
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
 `;
+
 
 const TopTexts = styled.div`
   ${mobile({ display: "none" })}
@@ -54,6 +56,11 @@ const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit; /* Inherit color from parent */
 `;
 const Info = styled.div`
   flex: 3;
@@ -183,7 +190,9 @@ const Cart = () => {
   <Wrapper>
     <Title>YOUR BAG</Title>
     <Top>
-        <TopButton><Link to="/">CONTINUE SHOPPING </Link></TopButton>
+        <TopButton>
+          <StyledLink to="/">CONTINUE SHOPPING  </StyledLink>
+          </TopButton>
       <TopTexts>
         <TopText>Shopping Bag(2)</TopText> {/* You can replace the '2' with the actual length of the cart */}
         <TopText>Your WishList(0)</TopText>
@@ -214,8 +223,9 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContrainer>
-                    <AddIcon /> <ProductAmount>2</ProductAmount> {/* Placeholder values */}
-                    <RemoveIcon />
+                   {/*  <AddIcon /> <ProductAmount>5</ProductAmount> Placeholder values */}
+                   <TopButton> <RemoveCircleIcon />
+                   </TopButton>
                   </ProductAmountContrainer>
                   <ProductPrice>
                     {/* Assuming product.price and cartItem.quantity are numbers */}
@@ -249,7 +259,9 @@ const Cart = () => {
           {/* Assuming you need to calculate the total price for all cart items */}
           <SummaryItemPrice>$ </SummaryItemPrice>
         </SummaryItem>
-        <Button><Link to="/checkout">CHECK OUT NOW</Link></Button>
+        <Button>
+        <StyledLink to="/checkout">CHECK OUT NOW</StyledLink>
+          </Button>
       </Summary>
     </Bottom>
   </Wrapper>

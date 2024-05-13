@@ -8,9 +8,12 @@ route.post('/addtocart', cart.addtocart);
 
 route.get('/getphoto/:productId',cart.getProductPhoto)
 
+route.get('/getcart/:userId', cart.getCart)*
+
+route.delete('/deletePanier/:id',cart.deletePanier)
+
 route.get('/getCartdetail/:cartId', cart.getCartDetail);
 
-route.get('/getcart/:userId', cart.getCart)
 
 route.get('/getPaniersByUserID/:userId', cart.getPaniersByUserID)
 
