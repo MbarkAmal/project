@@ -24,10 +24,8 @@ exports.remplircartForm = async (req, res) => {
             dateEX: dateEx
         });
 
-        // Save the cart to the database
         const savedCart = await cart.save();
 
-        // Send a response indicating success
         res.status(201).json(savedCart);
     } catch (error) {
         // If an error occurs, send an error response

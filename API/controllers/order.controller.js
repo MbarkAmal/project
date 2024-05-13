@@ -3,8 +3,6 @@ const Order = require('../models/Order');
 const Panier = require('../models/Panier');
 const User = require('../models/User');
 
-// POST /orders
-// Create an order for a specific user by user ID
 exports.createOrder = async (req, res) => {
     const userId = req.params.userId; // Assuming userId is passed as a route parameter
 
@@ -61,8 +59,31 @@ exports.createOrder = async (req, res) => {
     }
 };
 
+// fetch all order
+
+exports.getAllllOrder = async(req , res) => {
+    Order.find()
+    .then(orders => {
+        res.status(200).json(orders)
+    })
+    .catch(error => {
+        console.error("error fetching orders" , error);
+        res.status(400).json({ message : "server error"})
+    })
+
+};
 
 
+//delete order 
 
+exports.delete = async (req , res) =>{
+    try {
+        const id = req.params.id;
+        await Order.findByIdAndDelete({_id: id}) ;
+        res.status(200).json({message : " order deleted seccessfully" } )
 
-
+    }catch (error) {
+        console.log("error deleting order" , error)
+        res.status(5000).json({message: "server error"})
+    }
+};

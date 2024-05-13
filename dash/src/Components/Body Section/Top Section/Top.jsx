@@ -11,7 +11,7 @@ import {BsArrowRightShort } from 'react-icons/bs'
 //import images
 import img from'../../../Assets/img.jpg'
 import video from '../../../Assets/video.mp4'
-import img2 from'../../../Assets/img.jpg'
+import img2 from'../../../Assets/img4.jpg'
 
 
 
@@ -101,7 +101,7 @@ console.log(userData.username);
           </div>
 
           <div className="imgDiv">
-            <img src={img2} alt='Image Name'/>
+             <img src={img2} alt='Image Name'/>
           </div>
           
               {/*we used later */}

@@ -27,7 +27,7 @@ const Orders = () => {
   // Fetch orders data from the server
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/Orders/getallOrders`);
+      const response = await axios.get(`http://localhost:4000/order/fetchorder`);
       dispatch(getOrder(response.data));
     } catch (error) {
       console.log(error);
@@ -159,7 +159,7 @@ const Orders = () => {
     
       <td style={{ color: 'var(--PrimaryColor)' }}>#{index + 1}</td>
       <td>{order.totalPrice}</td>
-      <td>{order.customer.username}</td>
+     <td>{order.user.username}</td>
       <td style={{ color: getStatusColor(order.status) }}>{order.status}</td>
       <td>{order.createdAt}</td>
       <td>

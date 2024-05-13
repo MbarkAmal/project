@@ -1,7 +1,7 @@
 import { createSlice} from '@reduxjs/toolkit';
 
 const orderSlice = createSlice ({
-    name : "orders",
+    name : "order",
     initialState: {
 
         orders: []
