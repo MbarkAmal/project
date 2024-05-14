@@ -49,6 +49,28 @@ exports.logindash = async (req, res) => {
     }
   };
 
+  //get photo admin 
+  exports.userPhoto = async (req , res) =>{
+    try {
+        const user = await User.findById(req.params.id).select("photo_user");
+
+        if (!user) {
+            return res.status(404).send({success : false , message: "user not found"});
+        }
+
+        if (user.photo_user && user.photo_user.data) {
+            res.set("Content-Type", user.photo_user.contentType);
+            return res.status(200).send(user.photo_user.data);
+        } else {
+            return res.status(404).send({ success: false, message: "Photo not found for this user" });
+        }
+    }catch(error){
+        console.error("Error while getting user photo:", error);
+        res.status(500).send({ success: false, message: "Internal server error" });
+    }
+
+};
+
  /* exports.createphoto = async (req, res) => {
     try {
         if (!req.files || !req.files.photo_user) {

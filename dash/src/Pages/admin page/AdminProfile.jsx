@@ -13,8 +13,10 @@ const AdminProfile = () => {
   const [username , setUsername] = useState('')
   const [email , setEmail] = useState('')
   const [role , setRole] = useState('')
-  const [photo, setPhoto] = useState(null);
+  const [photo_user, setPhoto_user] = useState(null);
   const [saveimg, setSaveimg] = useState(false);
+  const [userData, setUserData] = useState(null);
+
   const dispatch = useDispatch()
   const navigate = useNavigate();
  // const userDataString = localStorage.getItem("user_data");
@@ -24,13 +26,13 @@ const AdminProfile = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPhoto(file);
+      setPhoto_user(file);
       setSaveimg(true);
     }
   };
 
   const handleSave = () => {
-    console.log("Photo saved:", photo);
+    console.log("Photo saved:", photo_user);
     setSaveimg(false);
   };
 
@@ -41,6 +43,9 @@ const AdminProfile = () => {
       setUsername(userData.username);
       setEmail(userData.email);
       setRole(userData.role);
+      setPhoto_user(userData.photo_user);
+      setUserData(userData); // Set userData state variable
+
     }
   }, []);
 
@@ -50,6 +55,7 @@ const AdminProfile = () => {
         username: username,
         email: email,
         role: role,
+        photo_user : photo_user,
       };
 
       const userDataString = localStorage.getItem("user_data");
@@ -92,10 +98,11 @@ const AdminProfile = () => {
       <div className="mainContent">
         <div className="bottom flex">
           <div className="imgcontainer">
-            {photo ? (
-              <img src={URL.createObjectURL(photo)} className="orderimg" alt="Uploaded" />
+            {photo_user ? (
+              <img src={URL.createObjectURL(photo_user)} className="orderimg" alt="Uploaded" />
             ) : (
-              <img src={img} className="orderimg" alt="Default" />
+              
+              <img src={`http://localhost:4000/admin/adminPhoto/${userData._id}`} className="orderimg" alt="Default" />
             )}
           </div>
           <div className="admin_detail">
