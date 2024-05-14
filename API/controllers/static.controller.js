@@ -72,3 +72,74 @@ exports.countConsumerCreatedToday = async (req , res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   };
+
+// salas for today $
+exports.totalPriceToday = async (req, res) => {
+    try {
+      const today = new Date () ;
+      const startOfDay = new Date (today.getFullYear() , today.getMonth(), today.getDate());
+      const endOfDay = new Date (today.getFullYear() , today.getMonth(), today.getDate() +1);
+  
+      const totalPrice = await order.aggregate([
+        {
+          $match: {
+            status: 'delivered' ,
+            createdAt: {
+              $gte: startOfDay,
+              $lt: endOfDay
+            }
+          }
+        },
+      
+        {
+          $group: {
+            _id: null,
+            total: { $sum: '$totalPrice' }
+          }
+        }
+      ]);
+  
+      res.status(200).json(totalPrice);
+    } catch (error) {
+      console.error('Error counting total price for all months:', error);
+      res.status(500).json({ message: ' server error' });
+    }
+  };
+
+  // count products delivred for today
+  exports.countProductsdeliveredForToday = async (req, res) => {
+    try {
+        const today = new Date();
+        const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+
+        const productsCount = await order.aggregate([
+            {
+                $match: {
+                    status: 'delivered',
+                    createdAt: {
+                        $gte: startOfDay,
+                        $lt: endOfDay
+                    }
+                }
+            },
+            {
+                $unwind: '$paniers'
+            },
+            {
+                $unwind: '$paniers.products'
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalProducts: { $sum: '$paniers.quantity' }
+                }
+            }
+        ]);
+
+        res.status(200).json(productsCount);
+    } catch (err) {
+        console.error('Error counting products', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};

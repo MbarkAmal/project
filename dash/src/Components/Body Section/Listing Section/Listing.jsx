@@ -38,7 +38,7 @@ const Listing = () => {
 
     const getProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/static/countproductsdeliveredfortoday`) ; 
+        const response = await axios.get(`http://localhost:4000/static/productsSelesForToday`) ; 
         console.log('Response:', response.data); 
         if (response.data.length >0){
           setProducts(response.data[0].totalProducts);
@@ -64,7 +64,7 @@ const Listing = () => {
 
     const getSales = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/static/counttotalpricefortoday');
+        const response = await axios.get('http://localhost:4000/static/salesForToday');
         console.log('Response:', response.data); // Log the response data for debugging
         if (response.data.length > 0) {
           setSales(response.data[0].total);
@@ -98,7 +98,7 @@ const Listing = () => {
 
           <div className="singleItem">
       <AiFillHeart className='icon'/>
-      <h3> Sales for Today: {sales} $</h3>
+      <h3> Sales for Today: {sales} DT</h3>
     </div>
 
 
@@ -109,9 +109,7 @@ const Listing = () => {
 
         <div className="singleItem">
           <MdProductionQuantityLimits  className='icon'/>
-          <Link to={'/Product'}>
         <h3> Products sales for Today : {products} </h3>
-         </Link>
         </div>
 
        
