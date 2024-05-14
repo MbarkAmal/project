@@ -29,7 +29,7 @@ const App = () => {
             <Routes>
                 {userData ? (
                     <>
-                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<Login />} />
                         <Route path="/dash" element={<Home />} />
                         <Route path="/AdminProfile" element={<AdminProfile />} />
                         <Route path="/Product" element={<Product />} />

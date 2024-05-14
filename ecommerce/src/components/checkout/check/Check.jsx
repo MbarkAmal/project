@@ -237,7 +237,7 @@ export default function Checkout() {
             <Button
               startIcon={<ArrowBackRoundedIcon />}
               component="a"
-              href="/"
+              href="/cart"
               sx={{ ml: "-8px" }}
             >
               Back to

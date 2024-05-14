@@ -148,6 +148,10 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const { userId } = useParams(); 
   useEffect(() => {
+
+    fetchCart();
+  }, []);
+
     const fetchCart = async () => {
       try {
         const userData = JSON.parse(localStorage.getItem('user_data'));
@@ -169,9 +173,8 @@ const Cart = () => {
         setLoading(false); 
       }
     };
+
   
-    fetchCart();
-  }, []);
 // count total product 
   const calculateSubtotal = (cart) => {
     console.log('Cart:', cart); 
@@ -181,6 +184,18 @@ const Cart = () => {
       });
     return subtotal;
   
+  };
+  //  //delete panier from cart 
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:4000/Cart/deletePanier/${id}`)
+    .then(res => {
+      console.log(res);
+     fetchCart();
+   })
+    .catch(error => {
+      console.error("error deleting panier ", error)
+    })    
   };
   
   return (
@@ -224,7 +239,7 @@ const Cart = () => {
                 <PriceDetail>
                   <ProductAmountContrainer>
                    {/*  <AddIcon /> <ProductAmount>5</ProductAmount> Placeholder values */}
-                   <TopButton> <RemoveCircleIcon />
+                   <TopButton onClick={() => handleDelete (cartItem._id)}> <RemoveCircleIcon />
                    </TopButton>
                   </ProductAmountContrainer>
                   <ProductPrice>

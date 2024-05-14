@@ -76,7 +76,7 @@ const Listing = () => {
 
     const getOrders = async() => {
       try {
-        const response = await axios.get('http://localhost:4000/static/countorderdeliveredfortoday');
+        const response = await axios.get('http://localhost:4000/static/orderforToday');
         console.log('response' , response.data);
         setOrders(response.data.count);
       }catch(err) {
