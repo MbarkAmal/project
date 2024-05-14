@@ -143,3 +143,19 @@ exports.totalPriceToday = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+//get last 5 customer orderd For today
+exports.getLastFiveOrders = async (req, res) => {
+    try {
+        const orders = await order.find()
+            .sort({ createdAt: -1 }) // Sort orders by createdAt in descending order
+            .limit(5); // Limit the result to the first 5 orders
+
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error("Error fetching orders", error);
+        res.status(400).json({ message: "Server error" });
+    }
+};
+
+  

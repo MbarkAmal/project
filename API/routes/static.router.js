@@ -12,4 +12,6 @@ route.get('/salesForToday', static.totalPriceToday)
 
 route.get('/productsSelesForToday', static.countProductsdeliveredForToday)
 
+route.get('/getLastCustomerorder', static.getLastFiveOrders)
+
 module.exports = route 

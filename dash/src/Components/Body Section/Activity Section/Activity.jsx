@@ -14,7 +14,7 @@ const Activity = () => {
   useEffect(() => {
     const fetchLastOrder = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/Orders/getlastcustomerorder');
+        const response = await axios.get('http://localhost:4000/static/getLastCustomerorder');
         setLastOrders(response.data);
       } catch (err) {
         console.error("Error fetching last orders", err);
@@ -36,12 +36,20 @@ const Activity = () => {
       <div className="secContainer grid">
         {lastOrders.map((order, index) => (
           <div className="singleCustomer flex" key={index}>
-            <img src={`http://localhost:4000/Orders/getphoto/${order.customer._id}`} alt="Customer Image" />
+            {/* Render user image if available */}
+            {/* <img src={`http://localhost:4000/Orders/getphoto/${order.user?._id}`} alt="Customer Image" /> */}
             <div className="customerDetails">
-              <span className="name">{order.customer.username}</span>
-              <small>Ordered a new Product</small>
+              {/* Conditional rendering of user details */}
+              {order.user ? (
+                <>
+                  <span className="name">{order.user.username}</span>
+                  <small>Ordered a new  Product</small>
+                </>
+              ) : (
+                <span className="name">Unknown User</span>
+              )}
             </div>
-            <div className="duration">2 min ago</div>
+            <div className="duration">{order.status}</div>
           </div>
         ))}
       </div>
