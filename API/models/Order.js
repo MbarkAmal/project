@@ -10,7 +10,11 @@ const orderSchema = new mongoose.Schema({
         username: {
             type: String,
             required: true
-        }
+        },
+        email: {
+            type:String ,
+            requierd : true
+        },
     },
 
     paniers: [{

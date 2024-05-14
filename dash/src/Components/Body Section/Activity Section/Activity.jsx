@@ -49,7 +49,7 @@ const Activity = () => {
                 <span className="name">Unknown User</span>
               )}
             </div>
-            <div className="duration">{order.status}</div>
+            <div className="duration">2 min</div>
           </div>
         ))}
       </div>

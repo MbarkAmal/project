@@ -110,7 +110,8 @@ function useForm() {
           ...formData,
           user: {
               _id: userData._id,
-              username: userData.username
+              username: userData.username,
+              email: userData.email,
           }
       };
 

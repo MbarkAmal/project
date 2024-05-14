@@ -15,6 +15,7 @@ exports.createOrder = async (req, res) => {
 
         // Fetch username separately
         const username = user.username;
+        const email = user.email;
         console.log(username);
 
         // Fetch Paniers associated with the userId and populate the products array
@@ -42,7 +43,8 @@ exports.createOrder = async (req, res) => {
         const order = new Order({
             user: {
                 _id: userId,
-                username: username
+                username: username,
+                email : email,
             },
             paniers: paniersWithProductNames,
             totalPrice: paniers.reduce((acc, panier) => acc + panier.total, 0)
@@ -87,3 +89,35 @@ exports.delete = async (req , res) =>{
         res.status(500).json({message: "server error"})
     }
 };
+
+//get order by id
+exports.getOrderDetailByID = async (req , res) => {
+    try {
+      const result = await Order.findById({_id: req.params.id});
+      res.status(200).json({ result}) ;
+  
+    }catch(err) {
+      console.error("error fetchin order by id", err);
+      res.status(500).json({message :"server error"})
+    }
+  }
+  
+  //updata satutus order 
+  exports.updateStatusOrder = async (req , res) => {
+    try {
+      const status = req.body;
+      const updateData = status ;
+      
+      const update = await Order.findByIdAndUpdate(req.params.id, updateData, {new: true});
+  
+      if(!update) {
+        return res.status(404).json({success: false, message: "order not found"})
+      }
+  
+      res.status(200).json({success: true, message: "status updated successufully",order: update })
+    }catch (error) {
+      console.error("Error while updating product:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+  }
+  }
+  

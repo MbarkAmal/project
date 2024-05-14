@@ -68,7 +68,7 @@ const Orders = () => {
   };
 
   const fetchOrderDetail = (orderId) => {
-    axios.get(`http://localhost:4000/Orders/getOrderDetailByID/${orderId}`)
+    axios.get(`http://localhost:4000/order/getorderById/${orderId}`)
     
       .then(res => {
         setOrderDetail(res.data.result); 
@@ -87,7 +87,7 @@ const Orders = () => {
       console.log('Updating status for order ID:', id);
       console.log('New status:', status);
       
-      axios.put(`http://localhost:4000/Orders/updateStatus/${id}`, data, {
+      axios.put(`http://localhost:4000/order/updateStatusOrder/${id}`, data, {
         headers: {
           'Content-Type': 'application/json' 
         }
@@ -96,6 +96,7 @@ const Orders = () => {
         if (response.status === 200) {
           console.log('Status updated successfully!', response);
           fetchData(); 
+          closeModal();
         } else {
           console.error('Failed to update status:', response.statusText);
         }
@@ -195,32 +196,40 @@ const Orders = () => {
           <span className="close" onClick={closeModal}>&times;</span>
           { orderDetail && (
           <div className="imgcontainer">
-            <img src={`http://localhost:4000/Orders/getphoto/${orderDetail.customer._id}`} className="orderimg"/>
+          { /* <img src={`http://localhost:4000/Orders/getphoto/${orderDetail.customer._id}`} className="orderimg"/> */}
 
           </div>
            )}
 
           <div className="divdetail" >
           {orderDetail && (
-            <div>
-              <h4>Order Detail</h4>
-              {orderDetail.products.map((product, index) => (
-                <div key={index}>
-                  <p>{product.productName} : {product.price} dt</p>
-                  <p>Quantity : {product.stock}</p>
-                </div>
-              ))}
-            </div>
-          )}
+  <div>
+    <h4>Order Detail</h4>
+    {/* Iterate over each panier */}
+    {orderDetail.paniers.map((panier, panierIndex) => (
+      <div key={panierIndex}>
+        {/* Iterate over each product within the panier */}
+        {panier.products.map((product, productIndex) => (
+          <div key={productIndex}>
+            <p>{product.productName} : {product.price} dt</p>
+            <p>Quantity: {panier.quantity}</p>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+)}
+
 
           
 
           </div>
+          
           { orderDetail && (
             <div className="constumerdetail">
             <h4>Customer detail : </h4>
-            <p> {orderDetail.customer.username}</p>
-            <p>email :bjqbnfknfn!l</p>
+            <p> {orderDetail.user.username}</p>
+            <p> {orderDetail.user.email}</p>
            </div>
            
 
