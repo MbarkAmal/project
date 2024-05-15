@@ -71,6 +71,56 @@ exports.logindash = async (req, res) => {
 
 };
 
+// update admin detail 
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { username, email, password, role } = req.fields;
+    const photo_user = req.files.photo_user;
+
+    const updateData = {
+      username,
+      email,
+      password,
+      role,
+    };
+
+    if (photo_user) {
+      updateData.photo_user = {
+        data: fs.readFileSync(photo_user.path),
+        contentType: photo_user.type
+      };
+    }
+
+    // Check if the role is being updated to "admin"
+    const existingUser = await User.findById(req.params.id);
+
+    if (!existingUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // If role is being updated, update isAdmin accordingly
+    if (role && existingUser.role !== role.toLowerCase()) {
+      updateData.isAdmin = role.toLowerCase() === "admin";
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({ success: true, message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error while updating user:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
  /* exports.createphoto = async (req, res) => {
     try {
         if (!req.files || !req.files.photo_user) {

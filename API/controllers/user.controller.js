@@ -28,7 +28,7 @@ exports.delete = async (req , res)=>{
 //update user 
 exports.updateUser = async (req, res) => {
     try {
-        const { username, email, password, role } = req.body;
+        const { username, email, password, role  } = req.body;
 
         const updateData = {
             username,
