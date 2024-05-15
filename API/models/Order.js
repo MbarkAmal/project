@@ -36,8 +36,11 @@ const orderSchema = new mongoose.Schema({
             price: {
                 type: Number,
                 required: true
-            }
-            // Add other fields as needed
+            },
+            category: {
+                type: String,
+                enum: ['Dry_fruit', 'Date', 'Nuts'],
+            },
         }],
         quantity:{
             type:Number

@@ -21,6 +21,11 @@ const panierSchema = new mongoose.Schema({
      },
      price: { type: Number, required: true },
      
+     category: {
+        type: String,
+        enum: ['Dry_fruit', 'Date', 'Nuts'],
+    },
+     
      photo: {
         data: Buffer,
         contentType: String,

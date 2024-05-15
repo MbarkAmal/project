@@ -31,6 +31,7 @@ exports.addtocart = async (req, res) => {
                 productName: product.productName,
                 price: product.price,
                 photo:product.photo,
+                category:product.category,
             }],
             quantity: quantity,
             total: total, // Set the total price here

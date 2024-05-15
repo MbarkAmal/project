@@ -19,7 +19,7 @@ const OrderChart = () => {
     useEffect(() => {
         const fetchOrderData = async () => {
             try {
-                const response = await fetch('http://localhost:4000/static/countformonth');
+                const response = await fetch('http://localhost:4000/static/countOrderDeliveredForMonth');
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }

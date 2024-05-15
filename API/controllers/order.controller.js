@@ -29,7 +29,8 @@ exports.createOrder = async (req, res) => {
             const productDetails = panier.products.map(product => ({
                 _id: product._id,
                 productName: product.productName,
-                price: product.price
+                price: product.price,
+                category : product.category,
             }));
             return {
                 _id: panier._id,

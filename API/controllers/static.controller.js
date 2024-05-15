@@ -158,4 +158,213 @@ exports.getLastFiveOrders = async (req, res) => {
     }
 };
 
-  
+// count order by status 
+exports.countOrdersByStatus = async (req, res) => {
+  try {
+      const orderCounts = await order.aggregate([
+          {
+              $group: {
+                  _id: '$status', 
+                  count: { $sum: 1 } 
+              }
+          }
+      ]);
+
+      // Send the aggregated results as a response
+      res.json(orderCounts);
+  } catch (error) {
+      console.error('Error counting orders by status:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};
+// count total order delivred for month 
+exports.countOrdersForMonth = async (req, res) => {
+  try {
+    const deliveredOrderCount = await order.aggregate([
+      {
+        $match: {
+          status: 'delivered' 
+        }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: '$createdAt' },
+            month: { $month: '$createdAt' }
+          },
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    res.status(200).json(deliveredOrderCount);
+  } catch (error) {
+    console.error('Error counting delivered orders for all months:', error);
+    res.status(500).json({ message: ' server error' });
+  }
+};
+
+// total price 
+exports.totalPriceForWeekMonthYear = async (req, res) => {
+  try {
+    const { type } = req.query;
+    let aggregationPipeline;
+
+    switch (type) {
+      case 'Week':
+        aggregationPipeline = [
+          {
+            $match: {
+              status: 'delivered' // Filter orders by status 'delivered'
+            }
+          },
+          {
+            $group: {
+              _id: {
+                year: { $year: '$createdAt' }, // Extract year from createdAt field
+                week: { $isoWeek: '$createdAt' } // Extract week from createdAt field
+              },
+              total: { $sum: '$totalPrice' } // Calculate total price for each week
+            }
+          }
+        ];
+        break;
+      case 'Month':
+        aggregationPipeline = [
+          {
+            $match: {
+              status: 'delivered' // Filter orders by status 'delivered'
+            }
+          },
+          {
+            $group: {
+              _id: {
+                year: { $year: '$createdAt' }, // Extract year from createdAt field
+                month: { $month: '$createdAt' } // Extract month from createdAt field
+              },
+              total: { $sum: '$totalPrice' } // Calculate total price for each month
+            }
+          }
+        ];
+        break;
+      case 'Year':
+        aggregationPipeline = [
+          {
+            $match: {
+              status: 'delivered' // Filter orders by status 'delivered'
+            }
+          },
+          {
+            $group: {
+              _id: {
+                year: { $year: '$createdAt' } // Extract year from createdAt field
+              },
+              total: { $sum: '$totalPrice' } // Calculate total price for each year
+            }
+          }
+        ];
+        break;
+      default:
+        res.status(400).json({ message: 'Invalid type parameter' });
+        return;
+    }
+
+    // Aggregate orders based on the selected type
+    const totalPrice = await order.aggregate(aggregationPipeline);
+
+    // Send the total prices for the selected type in the response
+    res.status(200).json({ totalPrice });
+  } catch (error) {
+    // If there's an error, return an error response
+    console.error('Error counting total price:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+//total prince in each categoty
+exports.totalPriceInCategoryForWeekMonthYear = async (req, res) => {
+  try {
+    const { type } = req.query;
+    let aggregationPipeline;
+    
+    switch (type) {
+      case 'Week':
+        aggregationPipeline = [
+          { 
+            $match: {
+              status: 'delivered',
+            }
+          },
+          {
+            $unwind: '$products'
+          },
+          {
+            $group: {
+              _id: {
+                category: '$products.category',
+                year: { $year: '$createdAt' },
+                month: { $month: '$createdAt' }
+              },
+              totalStock: { $sum: '$products.stock' },
+              totalPrice: { $sum: { $multiply: ['$products.stock', '$products.price'] } }
+            }
+          }
+        ];
+        break;
+      case 'Month':
+        aggregationPipeline = [
+          { 
+            $match: {
+              status: 'delivered',
+            }
+          },
+          {
+            $unwind: '$products'
+          },
+          {
+            $group: {
+              _id: {
+                category: '$products.category',
+                year: { $year: '$createdAt' },
+                month: { $month: '$createdAt' }
+              },
+              totalStock: { $sum: '$products.stock' },
+              totalPrice: { $sum: { $multiply: ['$products.stock', '$products.price'] } }
+            }
+          }
+        ];
+        break;
+      case 'Year':
+        aggregationPipeline = [
+          { 
+            $match: {
+              status: 'delivered',
+            }
+          },
+          {
+            $unwind: '$products'
+          },
+          {
+            $group: {
+              _id: {
+                category: '$products.category',
+                year: { $year: '$createdAt' },
+              },
+              totalStock: { $sum: '$products.stock' },
+              totalPrice: { $sum: { $multiply: ['$products.stock', '$products.price'] } }
+            }
+          }
+        ];
+        break;
+      default:
+        res.status(400).json({ message: 'Invalid type parameter' });
+        return;
+    }
+   
+    // Aggregate the products by category and sum up the stock and total price for the current month
+    const totalPricesByCategory = await Order.aggregate(aggregationPipeline);
+    res.status(200).json({ totalPricesByCategory });
+  } catch (err) {
+    console.error('Error counting products', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
