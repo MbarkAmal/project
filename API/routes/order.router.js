@@ -11,4 +11,7 @@ router.delete('/deleteOrder/:id', order.delete);
 router.get('/getorderById/:id', order.getOrderDetailByID)
 
 router.put('/updateStatusOrder/:id', order.updateStatusOrder)
+
+router.get('/getorderuser/:userId', order.getOrderDetailByUserID);
+
 module.exports = router;

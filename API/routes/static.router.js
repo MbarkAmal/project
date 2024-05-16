@@ -20,5 +20,7 @@ route.get('/countOrderDeliveredForMonth' , static.countOrdersForMonth)
 
 route.get('/totalPriceForWeekMonthYear' , static.totalPriceForWeekMonthYear)
 
+route.get('/totalPriceInCategory' , static.totalPriceInCategoryForWeekMonthYear)
+
 
 module.exports = route 

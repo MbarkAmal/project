@@ -122,3 +122,14 @@ exports.getOrderDetailByID = async (req , res) => {
   }
   }
   
+  //get order by use id
+  exports.getOrderDetailByUserID = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const result = await Order.find({ 'user._id': userId });
+        res.status(200).json({ result });
+    } catch (err) {
+        console.error("Error fetching order by user ID", err);
+        res.status(500).json({ message: "Server error" });
+    }
+};

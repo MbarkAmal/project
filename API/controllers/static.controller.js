@@ -295,17 +295,19 @@ exports.totalPriceInCategoryForWeekMonthYear = async (req, res) => {
             }
           },
           {
-            $unwind: '$products'
+            $unwind: '$paniers'
+          },
+          {
+            $unwind: '$paniers.products'
           },
           {
             $group: {
               _id: {
-                category: '$products.category',
+                category: '$paniers.products.category',
                 year: { $year: '$createdAt' },
-                month: { $month: '$createdAt' }
+                week: { $isoWeek: '$createdAt' }
               },
-              totalStock: { $sum: '$products.stock' },
-              totalPrice: { $sum: { $multiply: ['$products.stock', '$products.price'] } }
+              totalPrice: { $sum: '$paniers.totalPrice' }
             }
           }
         ];
@@ -318,17 +320,16 @@ exports.totalPriceInCategoryForWeekMonthYear = async (req, res) => {
             }
           },
           {
-            $unwind: '$products'
+            $unwind: '$paniers.products'
           },
           {
             $group: {
               _id: {
-                category: '$products.category',
+                category: '$paniers.products.category',
                 year: { $year: '$createdAt' },
                 month: { $month: '$createdAt' }
               },
-              totalStock: { $sum: '$products.stock' },
-              totalPrice: { $sum: { $multiply: ['$products.stock', '$products.price'] } }
+              totalPrice: { $sum: '$paniers.products.price' }
             }
           }
         ];
@@ -341,16 +342,15 @@ exports.totalPriceInCategoryForWeekMonthYear = async (req, res) => {
             }
           },
           {
-            $unwind: '$products'
+            $unwind: '$paniers.products'
           },
           {
             $group: {
               _id: {
-                category: '$products.category',
-                year: { $year: '$createdAt' },
+                category: '$paniers.products.category',
+                year: { $year: '$createdAt' }
               },
-              totalStock: { $sum: '$products.stock' },
-              totalPrice: { $sum: { $multiply: ['$products.stock', '$products.price'] } }
+              totalPrice: { $sum: '$paniers.products.price' }
             }
           }
         ];
@@ -360,11 +360,13 @@ exports.totalPriceInCategoryForWeekMonthYear = async (req, res) => {
         return;
     }
    
-    // Aggregate the products by category and sum up the stock and total price for the current month
-    const totalPricesByCategory = await Order.aggregate(aggregationPipeline);
+    // Aggregate the products by category and sum up the total price based on the specified time interval
+    const totalPricesByCategory = await order.aggregate(aggregationPipeline);
     res.status(200).json({ totalPricesByCategory });
   } catch (err) {
     console.error('Error counting products', err);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
+
+//count products sellers 
