@@ -42,6 +42,16 @@ export default function Review() {
     navigate("/placeOrder");
   };
 
+  const calculateSubtotal = (cart) => {
+    console.log('Cart:', cart); 
+    let subtotal = 0;
+    cart?.forEach(cartItem => {
+        subtotal += cartItem.total;
+      });
+    return subtotal;
+  
+  };
+
   return (
     <Box
       sx={{
@@ -70,9 +80,9 @@ export default function Review() {
         <ListItem key={product._id} sx={{ py: 1, px: 0 }}>
           <ListItemText
             primary={product.productName}
-            secondary={`Quantity: ${product.quantity}`}
+            secondary={`Quantity: ${cartItem.quantity}`}
           />
-          <Typography variant="body2">${product.total}</Typography>
+          <Typography variant="body2">{product.price} dt</Typography>
         </ListItem>
       ))}
       {/* Add shipping details if available */}
@@ -83,7 +93,7 @@ export default function Review() {
       <ListItem sx={{ py: 1, px: 0 }}>
         <ListItemText
           primary="Total"
-          secondary={`$${parseFloat(cartItem.total) + 9.99}`}
+          secondary={`${parseFloat(cartItem.total) } dt`}
         />
         <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
           {`$${parseFloat(cartItem.total)}`}
@@ -100,17 +110,16 @@ export default function Review() {
   >
     <div>
       <Typography variant="h6" sx={{ color: "#333", fontWeight: 700 }}>
-        Payment Details
+      Total amount 
       </Typography>
+        {calculateSubtotal(cart)} dt    
       <Grid container spacing={2}>
         {cart && cart.map((cartItem) => (
           cartItem.products.map((product) => (
             <Grid item key={product._id} xs={12} sm={6}>
               <Stack direction="row" spacing={1} useFlexGap>
                 <Typography variant="body1" sx={{ color: "#333" }}>
-                  {product.productName}
                 </Typography>
-                <Typography variant="body2">${product.price}</Typography>
               </Stack>
             </Grid>
           ))
