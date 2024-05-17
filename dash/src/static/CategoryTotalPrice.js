@@ -9,10 +9,10 @@ const CategoryTotalPrice = () => {
 
     const fetchData = async (type) => {
         try {
-            const response = await axios.get(`http://localhost:4000/static/totalpriceinCategory?type=${type}`);
+            const response = await axios.get(`http://localhost:4000/static/NbrProductSelesForWeekMonthYear?type=${type}`);
             console.log(response.data); // Log response data structure for debugging
     
-            const data = response.data.totalPricesByCategory;
+            const data = response.data.TotalNumber;
     
             // Check if data is an array
             if (!Array.isArray(data)) {
@@ -24,7 +24,7 @@ const CategoryTotalPrice = () => {
     
             data.forEach(item => {
                 labels.push(item._id.category);
-                totals.push(item.totalPrice);
+                totals.push(item.TotalNumber);
             });
     
             const ctx = chartRef.current.getContext('2d'); // Get canvas context
@@ -39,7 +39,7 @@ const CategoryTotalPrice = () => {
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Total Price',
+                            label: 'Number of Products Sold',
                             backgroundColor: 'rgba(54, 162, 235, 0.5)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1,
@@ -54,7 +54,7 @@ const CategoryTotalPrice = () => {
                             },
                             title: {
                                 display: true,
-                                text: 'Total Price of category  for each month '
+                                text: 'Number of Products Sold for Each Category'
                             }
                         }
                     }
@@ -70,10 +70,8 @@ const CategoryTotalPrice = () => {
         }
     };
     
-    
-
     useEffect(() => {
-        fetchData('Week'); // Default to Month when component mounts
+        fetchData('Week'); // Default to Week when component mounts
     }, []);
 
     return (
@@ -83,8 +81,7 @@ const CategoryTotalPrice = () => {
                 <button style={buttonStyle} onClick={() => fetchData('Month')}>Month</button>
                 <button style={buttonStyle} onClick={() => fetchData('Year')}>Year</button>
             </div>
-           
-            <div className="chart"  >
+            <div className="chart">
                 {error ? (
                     <div>Error: {error}</div>
                 ) : (
@@ -94,6 +91,7 @@ const CategoryTotalPrice = () => {
         </div>
     );
 };
+
 const buttonStyle = {
     border: '1px solid transparent',
     backgroundColor: 'rgba(51, 51, 51, 0.05)',

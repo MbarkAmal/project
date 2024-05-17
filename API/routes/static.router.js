@@ -22,5 +22,7 @@ route.get('/totalPriceForWeekMonthYear' , static.totalPriceForWeekMonthYear)
 
 route.get('/totalPriceInCategory' , static.totalPriceInCategoryForWeekMonthYear)
 
+route.get('/NbrProductSelesForWeekMonthYear', static.NbrProductSelesForWeekMonthYear)
+
 
 module.exports = route 

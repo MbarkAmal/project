@@ -17,7 +17,7 @@ const ProductsChart = () => {
   useEffect(() => {
     const fetchProductCountsByCategory = async () => {
       try {
-        const response = await fetch('http://localhost:4000/Products/countallProductsByCategory');
+        const response = await fetch('http://localhost:4000/Products/countallProductsByCategory'); // fix
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }

@@ -369,4 +369,85 @@ exports.totalPriceInCategoryForWeekMonthYear = async (req, res) => {
   }
 };
 
-//count products sellers 
+//count products sellers in montth yea week  nbre de produit 
+exports.NbrProductSelesForWeekMonthYear = async (req, res) => {
+  try {
+    const { type } = req.query;
+    let aggregationPipeline;
+
+    switch (type) {
+      case 'Week':
+        aggregationPipeline = [
+          {
+            $match: {
+              status: 'delivered',
+            }
+          },
+          {
+            $unwind: '$paniers'
+          },
+          {
+            $group: {
+              _id: {
+                year: { $year: "$createdAt" },
+                week: { $isoWeek: "$createdAt" }
+              },
+              TotalNumber: { $sum: '$paniers.quantity' }
+            }
+          }
+        ];
+        break;
+      case 'Month':
+        aggregationPipeline = [
+          {
+            $match: {
+              status: 'delivered',
+            }
+          },
+          {
+            $unwind: '$paniers'
+          },
+          {
+            $group: {
+              _id: {
+                year: { $year: "$createdAt" },
+                month: { $month: "$createdAt" }
+              },
+              TotalNumber: { $sum: '$paniers.quantity' }
+            }
+          }
+        ];
+        break;
+      case 'Year':
+        aggregationPipeline = [
+          {
+            $match: {
+              status: 'delivered',
+            }
+          },
+          {
+            $unwind: '$paniers'
+          },
+          {
+            $group: {
+              _id: { $year: "$createdAt" },
+              TotalNumber: { $sum: '$paniers.quantity' }
+            }
+          }
+        ];
+        break;
+      default:
+        res.status(400).json({ message: 'Invalid type parameter' });
+        return;
+    }
+
+    // Aggregate the total number of products sold
+    const TotalNumber = await order.aggregate(aggregationPipeline);
+
+    // Send the total number as a response
+    res.status(200).json({ TotalNumber });
+  } catch (err) {
+    console.error('Error counting products', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

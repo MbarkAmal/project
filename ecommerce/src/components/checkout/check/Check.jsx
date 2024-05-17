@@ -175,10 +175,10 @@ export default function Checkout() {
   
     switch (activeStep) {
       case 0:
-       // isStepValid = formData.Fullname.trim() !== '' && formData.phone.trim() !== '' && formData.address.trim() !== '' && formData.city.trim() !== '' && formData.state.trim() !== '' && formData.zip.trim() !== '' && formData.country.trim() !== '';
+       isStepValid = formData.Fullname.trim() !== '' && formData.phone.trim() !== '' && formData.address.trim() !== '' && formData.city.trim() !== '' && formData.state.trim() !== '' && formData.zip.trim() !== '' && formData.country.trim() !== '';
         break;
       case 1:
-        //isStepValid = formData.CardNum.trim() !== '' && formData.cvv.trim() !== '' && formData.dateEX.trim() !== '';
+      //  isStepValid = formData.CardNum.trim() !== '' && formData.cvv.trim() !== '' && formData.dateEX.trim() !== '';
         break;
       case 2:
         break;
