@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import {  useNavigate  } from 'react-router-dom'
 import styled from "styled-components";
@@ -49,8 +50,8 @@ const Button = styled.button`
   cursor: pointer;
 `;
 const Register = () => {
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+ // const [name, setName] = useState("");
+ // const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,26 +66,32 @@ const Register = () => {
       return;
     }
     try {
-      const user = { username, email, password, name, lastName };
+      const user = { username, email, password,   };
       console.log(user);
       const response = await axios.post('http://localhost:4000/auth/register', user);
       console.log(response);
+      toast.success('Compte created successfully');
+
       navigate('/login');
     } catch (error) {
       console.error('Error during registration:', error.response.data);
+      toast.error('check something wrong');
+
       // Handle error, maybe set error state to display error message
     }
   };
   return (
     <Container>
+      <Toaster/>
       <Wrapper>
         <Title>Create my account</Title>
         <Form onSubmit={handleSubmit}>
-          <Input placeholder="name" onChange={(e) => setName(e.target.value)} />
+      {  /*  <Input placeholder="name" onChange={(e) => setName(e.target.value)} />
           <Input
             placeholder="last name"
             onChange={(e) => setLastName(e.target.value)}
           />
+        */}
           <Input
             placeholder="username"
             onChange={(e) => setUsername(e.target.value)}

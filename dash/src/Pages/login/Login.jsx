@@ -18,9 +18,10 @@ const Login = () => {
                 username: username,
                 password: password
             });
-            toast.success('Successfully logged in!!');
 
             console.log(response);
+            toast.success('Successfully logged in!!');
+
 
             // Save data user in localStorage 
             localStorage.setItem('user_data', JSON.stringify(response.data.user))
@@ -34,6 +35,8 @@ const Login = () => {
 
         } catch (error) {
             console.error('Error during login:', error);
+            toast.error('check again');
+
             // Handle error, maybe set error state to display error message
         }
     };
@@ -53,7 +56,6 @@ const Login = () => {
             }} >
               
               <Toaster/>
-
             <input
                 style={{ padding: 10, marginBottom: 20 }}
                 type="text"

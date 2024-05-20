@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 import {  useNavigate  } from 'react-router-dom'
 import axios from 'axios';
 import styled from "styled-components";
@@ -77,6 +78,8 @@ const Login = () => {
       //const { user, accessToken } = response.data;
       console.log(response);
       //save data user in localstorage 
+      toast.success('Successfully logged in!!');
+
 
       localStorage.setItem('user_data', JSON.stringify(response.data.user))
       localStorage.setItem('token', response.data.accessToken)
@@ -86,6 +89,8 @@ const Login = () => {
 
     } catch (error) {
       console.error('Error during login:', error);
+      toast.error('check again');
+
       // Handle error, maybe set error state to display error message
     }
   };
@@ -93,6 +98,7 @@ const Login = () => {
 
   return (
     <Container>
+     <Toaster/>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
