@@ -29,7 +29,7 @@ const Sidebar = () => {
     // Clear user data from local storage
     localStorage.removeItem("user_data");
     localStorage.removeItem("token");
-    navigate('/login');
+    navigate('/');
     window.location.reload(); // Refresh the page
   };
 

@@ -33,9 +33,17 @@ const Select = styled.select`
 const Option = styled.option``;
 const ProductList = () => {
   const location = useLocation();
-  const cat = location.pathname.split("/")[2];
+  const cat = location.pathname
+    .split("/")[2] ; 
+    /*.split("_")
+    .map(
+      w =>
+        w[0].toUpperCase() +
+        w.slice(1).toLowerCase()
+    ).join(" ");*/
   const [filter, setFilter] = useState();
   const [sort, setsort] = useState();
+  //const [cat , setCat] = useState();
 
   const handlefilter = (e) => {
     const value = e.target.value;

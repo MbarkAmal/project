@@ -51,7 +51,7 @@ const CategoryItem = ({ item }) => {
     return (
     <Container>
       <Link to={`/products/${item.cat}`}>
-        <Image src={"https://nwwildfoods.com/cdn/shop/products/raw-organic-almonds.jpg?v=1674424072&width=3000"} />
+        <Image src={"https://prannuts.com/cdn/shop/products/WALNUTS_1024x1024.jpg?v=1631278417"} />
         <Info>
           <Title>{item.title}</Title>
           <Button >SHOP NOW</Button>

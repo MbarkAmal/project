@@ -134,6 +134,10 @@ const Product = () => {
   const [stock, setStock] = useState(1);
   const [userID, setUserID] = useState("");
 
+  useEffect(() => {
+    document.title = "MTB Shop | " + productName;
+  }, [ productName ])
+
 
   const dispatch = useDispatch();
   {/*useEffect(() => {

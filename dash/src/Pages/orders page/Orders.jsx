@@ -194,12 +194,7 @@ const Orders = () => {
         {/* Modal content */}
         <div className="modal-content">
           <span className="close" onClick={closeModal}>&times;</span>
-          { orderDetail && (
-          <div className="imgcontainer">
-          { /* <img src={`http://localhost:4000/Orders/getphoto/${orderDetail.customer._id}`} className="orderimg"/> */}
-
-          </div>
-           )}
+          
 
           <div className="divdetail" >
           {orderDetail && (

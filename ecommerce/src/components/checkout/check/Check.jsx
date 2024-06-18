@@ -236,19 +236,15 @@ export default function Checkout() {
             }}
           >
             <Button
-              startIcon={<ArrowBackRoundedIcon />}
-              component="a"
-              href="/cart"
-              sx={{ ml: "-8px" }}
-            >
-              Back to
-              <img
-                src={
-                  "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
-                }
-                style={logoStyle}
-                alt="Sitemark's logo"
-              />
+                startIcon={<ArrowBackRoundedIcon />}
+                component="a"
+                href="/cart"
+                sx={{ ml: "-8px" }}
+              ><span style={{
+                fontSize: "18px"
+              }}>
+                Back to Shop
+              </span>
             </Button>
           </Box>
           <Box
@@ -302,15 +298,11 @@ export default function Checkout() {
                 component="a"
                 href="/material-ui/getting-started/templates/landing-page/"
                 sx={{ alignSelf: "start" }}
-              >
-                Back to
-                <img
-                  src={
-                    "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
-                  }
-                  style={logoStyle}
-                  alt="Sitemark's logo"
-                />
+              ><span style={{
+                fontSize: "18px"
+              }}>
+                Back to Shop
+              </span>
               </Button>
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
             </Box>

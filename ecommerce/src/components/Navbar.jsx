@@ -102,7 +102,13 @@ const isLoggedIn = !!localStorage.getItem("user_data");
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>More Than Buisness</Logo>
+          <Logo>
+            <span style={{
+                textWrap: "nowrap",
+                padding: "0 8px"
+              }}>
+MTB  SHOP             </span>
+          </Logo>
 
         </Center>
         <Right>

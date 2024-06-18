@@ -244,7 +244,7 @@ const Cart = () => {
                   </ProductAmountContrainer>
                   <ProductPrice>
                     {/* Assuming product.price and cartItem.quantity are numbers */}
-                    {cartItem.total} $
+                    {cartItem.total} DT
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -259,20 +259,20 @@ const Cart = () => {
         {/* Assuming you need to calculate the total price for all cart items */}
         <SummaryItem>
           <SummaryItemText>Subtotal</SummaryItemText>
-          <SummaryItemPrice>${calculateSubtotal(cart)}</SummaryItemPrice>    
+          <SummaryItemPrice>{calculateSubtotal(cart)} DT</SummaryItemPrice>    
               </SummaryItem>
         <SummaryItem>
           <SummaryItemText>Estimated shipping </SummaryItemText>
-          <SummaryItemPrice>$ 5</SummaryItemPrice>
+          <SummaryItemPrice>DT</SummaryItemPrice>
         </SummaryItem>
         <SummaryItem>
           <SummaryItemText>Shipping Discount</SummaryItemText>
-          <SummaryItemPrice>$ -5</SummaryItemPrice>
+          <SummaryItemPrice> DT </SummaryItemPrice>
         </SummaryItem>
         <SummaryItem type="total">
           <SummaryItemText>Total</SummaryItemText>
           {/* Assuming you need to calculate the total price for all cart items */}
-          <SummaryItemPrice>$ </SummaryItemPrice>
+          <SummaryItemPrice> {calculateSubtotal(cart)} DT  </SummaryItemPrice>
         </SummaryItem>
         <Button>
         <StyledLink to="/checkout">CHECK OUT NOW</StyledLink>

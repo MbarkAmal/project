@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import {  useNavigate  } from 'react-router-dom'
 import axios from 'axios';
@@ -65,8 +65,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
-
+  
+  useEffect(() => {
+    document.title = "MTB Shop | Login";
+  }, []);
+  
   const handleClick = async (e) => {
+
+
     e.preventDefault();
     
     try {

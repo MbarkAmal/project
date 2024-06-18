@@ -87,6 +87,8 @@ const User = () => {
     }
   }*/
   const handleDelete = (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmed) return; 
     axios.delete('http://localhost:4000/user/deleteUser/'+id)
       .then(res => {
         dispatch(deleteUser({id}));

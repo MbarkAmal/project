@@ -70,12 +70,10 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>DOLDOL</Logo>
+        <Logo>MTB SHOP </Logo>
         <Desc>
-          there are many cariations pf passeges Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Sunt nihil optio, repellat, nemo sint
-          soluta architecto aliquid, at odit nisi molestias cumque accusamus
-          libero ex voluptate reiciendis facere! In, libero!
+        Because to us, each transaction transcends mere commerce; 
+        it signifies a bond founded on trust and excellence..
         </Desc>
         <SocialContainer>
           <SocialIcon color="3B5999">
@@ -92,16 +90,8 @@ const Footer = () => {
       <Center>
         <Title>Usefull Links</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Man Fashion</ListItem>
-          <ListItem>Woman fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>whishlist</ListItem>
-          <ListItem>whishlist</ListItem>
-          <ListItem>terms</ListItem>
+          <ListItem></ListItem>
+         
         </List>
       </Center>
       <Right>
